@@ -1,7 +1,8 @@
 const RidesServices = require('../services/rides');
 const ApiError = require('../error/ApiError');
 const {ridesNotFound} = require("../error/messages");
-const validator = require("../utils/validation/validator");
+const rideSchema = require("../utils/validation/rides");
+const rideModel = require("../models/ride");
 
 class RidesController {
   async getRides(req, res, next) {
@@ -43,8 +44,12 @@ class RidesController {
 
   async createRide(req, res, next) {
     try {
-      const ride = validator(req, res);
-      const result = await RidesServices.createRide(ride);
+      const errors = rideSchema.validate(rideModel(req.body));
+
+      if (errors.length) {
+        ApiError.badRequest(errors[0].message);
+      }
+      const result = await RidesServices.createRide(req.body);
       res.status(201).json(result);
     } catch (e) {
       next(ApiError.internal(e.message));
