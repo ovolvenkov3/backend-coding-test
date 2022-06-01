@@ -44,11 +44,12 @@ class RidesController {
 
   async createRide(req, res, next) {
     try {
-      const errors = rideSchema.validate(rideModel(req.body));
+      const errors = rideSchema.validate(rideModel(req, res));
 
       if (errors.length) {
         ApiError.badRequest(errors[0].message);
       }
+
       const result = await RidesServices.createRide(req.body);
       res.status(201).json(result);
     } catch (e) {
