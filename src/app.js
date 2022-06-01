@@ -2,11 +2,14 @@
 
 const express = require('express');
 const app = express();
+const swagger = require('swagger-ui-express');
+const docs = require('../docs/swagger');
 
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
 module.exports = (db) => {
+    app.use('/swagger-docs', swagger.serve, swagger.setup(docs));
     app.get('/health', (req, res) => res.send('Healthy'));
 
     app.post('/rides', jsonParser, (req, res) => {
