@@ -1,21 +1,16 @@
 'use strict';
 
+require('dotenv').config();
+const router = require('./src/router/router');
 const express = require('express');
-const app = express();
-const port = 8010;
+const cors = require('cors');
+const errorHandlingMiddleware = require("./src/middleware/ErrorHandlingMiddleware");
+const swagger = require("swagger-ui-express");
+const docs = require("./docs/swagger");
+const app = require('./src/app');
 
-const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
-
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database(':memory:');
-
-const buildSchemas = require('./src/schemas');
-
-db.serialize(() => {
-    buildSchemas(db);
-
-    const app = require('./src/app')(db);
-
-    app.listen(port, () => console.log(`App started and listening on port ${port}`));
-});
+app.use(cors());
+app.use(express.json());
+app.use(router);
+app.use(errorHandlingMiddleware);
+app.use('/swagger-docs', swagger.serve, swagger.setup(docs));
