@@ -1,7 +1,7 @@
 module.exports = {
   RIDES_NOT_FOUND_ERROR: {
     error_code: 'RIDES_NOT_FOUND_ERROR',
-    message: 'Could not find any rides',
+    message: 'Rides not found!',
   },
   START_COORDINATES_ERROR: {
     error_code: 'VALIDATION_ERROR',

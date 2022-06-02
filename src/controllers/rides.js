@@ -9,13 +9,10 @@ class RidesController {
   async getRides(req, res, next) {
     try {
       const rides = await RidesServices.getRides();
-      if (!rides.length) {
-        next(ApiError.badRequest(ridesNotFound));
-      }
       if (rides.length === 0) {
         res.send({
           error_code: 'RIDES_NOT_FOUND_ERROR',
-          message: couldNotFindRides
+          message: ridesNotFound
         });
       }
       res.json(rides);
