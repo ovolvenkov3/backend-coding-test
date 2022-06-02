@@ -15,7 +15,7 @@ jobs:
       tag: '10.14'
     steps:
       - run: npm install
-      - run: npm run test
+      - run: mocha --exit tests
 
 workflows:
   coding-exercise:
