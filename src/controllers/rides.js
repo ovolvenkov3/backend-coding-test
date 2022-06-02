@@ -8,7 +8,8 @@ const {CREATED} = require("../error/errorCodes");
 class RidesController {
   async getRides(req, res, next) {
     try {
-      const rides = await RidesServices.getRides();
+      const limit = req.query.limit || 10;
+      const rides = await RidesServices.getRides(limit);
       if (rides.length === 0) {
         res.send({
           error_code: 'RIDES_NOT_FOUND_ERROR',
