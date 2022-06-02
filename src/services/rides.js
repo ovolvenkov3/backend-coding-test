@@ -3,15 +3,15 @@ const db = require('../dataBase/dataBase');
 class RidesServices {
   constructor() {
     this.sql = {
-      getRides: 'SELECT * FROM Rides',
+      getRides: 'SELECT * FROM Rides ORDER BY rideID LIMIT ?',
       getRide: `SELECT * FROM Rides WHERE rideID=?`,
       createRide: 'INSERT INTO Rides(startLat, startLong, endLat, endLong, riderName, driverName, driverVehicle) VALUES (?, ?, ?, ?, ?, ?, ?)'
     };
   }
 
-  getRides() {
+  getRides(limit) {
     return new Promise((resolve, reject) => {
-      db.all(this.sql.getRides, (err, result) => {
+      db.all(this.sql.getRides, limit, (err, result) => {
         err ? reject(err) : resolve(result);
       });
     });
