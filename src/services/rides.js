@@ -35,7 +35,6 @@ class RidesServices {
       });
     });
   }
-
 }
 
 module.exports = new RidesServices();

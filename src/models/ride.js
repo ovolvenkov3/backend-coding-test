@@ -42,7 +42,9 @@ const rideModel = (req, res) => {
     });
   }
 
-  return [req.body.start_lat, req.body.start_long, req.body.end_lat, req.body.end_long, req.body.rider_name, req.body.driver_name, req.body.driver_vehicle];
+  return [
+    req.body.start_lat, req.body.start_long, req.body.end_lat, req.body.end_long, req.body.rider_name, req.body.driver_name, req.body.driver_vehicle
+  ];
 };
 
 module.exports = rideModel;

@@ -8,6 +8,7 @@ const cors = require('cors');
 const errorHandlingMiddleware = require("../src/middleware/ErrorHandlingMiddleware");
 const swagger = require("swagger-ui-express");
 const docs = require("../docs/swagger");
+
 const app = express();
 
 app.use(cors());
