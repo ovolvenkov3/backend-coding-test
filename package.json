@@ -7,18 +7,21 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "nyc mocha tests",
+    "test": "mocha --exit tests",
     "start": "nodemon index.js",
-    "build": "npx tsc",
-    "coverage": "nyc npm run test",
+    "coverage": "nyc --require mocha --check-coverage npm run test",
     "test:load": "forever start index.js && sleep 2s && artillery run ./tests/load-test.yml && forever stop index.js",
     "lint": "npx eslint .",
     "lint:fix": "npx eslint . --fix"
   },
-  "pre-push": [
-    "test",
-    "coverage"
-  ],
+  "prepush": {
+    "tasks": [
+      "test",
+      "coverage"
+    ],
+    "onDirtyState": "ask",
+    "coloredOutput": true
+  },
   "keywords": [
     "Xendit"
   ],
