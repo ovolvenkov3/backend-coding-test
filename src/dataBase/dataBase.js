@@ -2,7 +2,6 @@
 'use strict';
 
 const util = require('util');
-
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database(':memory:');
 
@@ -13,6 +12,7 @@ db.allAsync = util.promisify(db.all);
 db.serialize();
 
 db.createTables = async function () {
+  sqlite3.verbose();
   const createRideTableSchema = `
         CREATE TABLE IF NOT EXISTS Rides
         (

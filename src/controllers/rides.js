@@ -1,8 +1,9 @@
 const RidesServices = require('../services/rides');
 const ApiError = require('../error/ApiError');
-const {ridesNotFound} = require("../error/messages");
+const {ridesNotFound, couldNotFindRides} = require("../error/messages");
 const rideSchema = require("../utils/validation/rides");
 const rideModel = require("../models/ride");
+const {CREATED} = require("../error/errorCodes");
 
 class RidesController {
   async getRides(req, res, next) {
@@ -14,7 +15,7 @@ class RidesController {
       if (rides.length === 0) {
         res.send({
           error_code: 'RIDES_NOT_FOUND_ERROR',
-          message: 'Could not find any rides'
+          message: couldNotFindRides
         });
       }
       res.json(rides);
@@ -33,7 +34,7 @@ class RidesController {
       if (ride.length === 0) {
         return res.send({
           error_code: 'RIDES_NOT_FOUND_ERROR',
-          message: 'Could not find any rides'
+          message: couldNotFindRides
         });
       }
       res.json(ride);
@@ -51,7 +52,7 @@ class RidesController {
       }
 
       const result = await RidesServices.createRide(req.body);
-      res.status(201).json(result);
+      res.status(CREATED).json(result);
     } catch (e) {
       next(ApiError.internal(e.message));
     }

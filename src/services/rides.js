@@ -30,7 +30,8 @@ class RidesServices {
       const values = Object.values(ride);
       const context = this;
       db.run(this.sql.createRide, values, function (err) {
-        err ? reject(err) : resolve(db.getAsync(context.sql.getRide, this.lastID));
+        const data = db.getAsync(context.sql.getRide, this.lastID);
+        err ? reject(err) : resolve(data);
       });
     });
   }
