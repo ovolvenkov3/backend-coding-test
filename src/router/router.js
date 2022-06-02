@@ -1,7 +1,6 @@
 const Router = require('express');
 const RidesController = require('../controllers/rides.js');
 const HealthController = require('../controllers/health.js');
-
 const router = Router();
 
 router.get('/rides', RidesController.getRides);

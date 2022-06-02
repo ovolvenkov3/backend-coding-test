@@ -8,6 +8,7 @@ const errorHandlingMiddleware = (err, req, res, next) => {
     logger.error(err.message, { status: err.status });
     return res.status(err.status).json({ message: err.message });
   }
+
   return res.status(INTERNAL_SERVER_ERROR).json({ message: unexpectedError });
 };
 
