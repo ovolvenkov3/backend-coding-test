@@ -28,8 +28,10 @@ class RidesServices {
   createRide(ride) {
     return new Promise((resolve, reject) => {
       const values = Object.values(ride);
-      db.run(this.sql.createRide, values, (err, result) => {
-        err ? reject(err) : resolve(result);
+      const context = this;
+      db.run(this.sql.createRide, values, function (err) {
+        const data = db.getAsync(context.sql.getRide, this.lastID);
+        err ? reject(err) : resolve(data);
       });
     });
   }
